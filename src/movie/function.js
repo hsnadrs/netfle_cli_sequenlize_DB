@@ -50,12 +50,18 @@ exports.updateActor = async (movieObj) => {
         //     }
         //   });
       
-const newMovies = await sequelize.query(`Update actor SET actor.name = movieObj.actor FROM actors 
-WHERE actors.id = (SELECT ActorId from movies_actors LEFT JOINT Movies ON Movies.title = movieObj.title )`,
- { type: QueryTypes.UPDATE });
+// const newMovies = await sequelize.query(`Update actor SET actor.name = movieObj.actor FROM actors 
+// WHERE actors.id = (SELECT ActorId from movies_actors LEFT JOINT Movies ON Movies.title = movieObj.title )`,
+//  { type: QueryTypes.UPDATE });
         
         
-        console.log(newMovies);
+ const result = await sequelize.query(`UPDATE actors SET name = :newActorName
+ WHERE id IN (SELECT ActorId
+              FROM movies_actors
+              LEFT JOIN Movies ON Movies.id = MovieId
+              WHERE Movies.title = :movieTitle)`,
+{ replacements: { newActorName: movieObj.actor, movieTitle: movieObj.title }, type: QueryTypes.UPDATE });  
+        console.log(result);
     } catch (error) {
         console.log(error);
     }
