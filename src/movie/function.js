@@ -27,6 +27,7 @@ exports.readMovie = async (movieObj) => {
         //first method list movies info without actor
         const newMovie = await Movie.findAll(JSON.stringify());
         console.log (newMovie);
+        // try to list full movie with actors from actor table
         const Movies = await sequelize.query(
         `SELECT *
         FROM Movies 
