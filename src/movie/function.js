@@ -52,10 +52,11 @@ exports.updateActor = async (movieObj) => {
         //     }
         //   });
       
-// const newMovies = await sequelize.query(`Update actor SET actor.name = movieObj.actor FROM actors 
-// WHERE actors.id = (SELECT ActorId from movies_actors LEFT JOINT Movies ON Movies.title = movieObj.title )`,
-//  { type: QueryTypes.UPDATE });
-        
+//first mothod simply update movie table infor e.g. director by search of title
+await Movie.update(
+    {director: movieObj.director},
+    {where:{title: movieObj.title}});
+ //second a compilcated query to change actor name from actor table searching Movie table       
 // This function updates the name of an actor associated with a movie whose title is equal to 
 // movieObj.title, by using a query that updates the name in the Actors table. 
 // The query uses the Sequelize query
