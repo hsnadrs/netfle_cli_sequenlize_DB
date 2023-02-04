@@ -24,8 +24,9 @@ exports.createMovie = async (movieObj) => {
 const { QueryTypes } = require('sequelize');
 exports.readMovie = async (movieObj) => {
     try {
-        //const newMovie = await Movie.findAll(JSON.stringify());
-        
+        //first method list movies info without actor
+        const newMovie = await Movie.findAll(JSON.stringify());
+        console.log (newMovie);
         const Movies = await sequelize.query(
         `SELECT *
         FROM Movies 
@@ -54,7 +55,10 @@ exports.updateActor = async (movieObj) => {
 // WHERE actors.id = (SELECT ActorId from movies_actors LEFT JOINT Movies ON Movies.title = movieObj.title )`,
 //  { type: QueryTypes.UPDATE });
         
-        
+// This function updates the name of an actor associated with a movie whose title is equal to 
+// movieObj.title, by using a query that updates the name in the Actors table. 
+// The query uses the Sequelize query
+//  interface, which allows for parameterizing the query with replacements.
  const result = await sequelize.query(`UPDATE actors SET name = :newActorName
  WHERE id IN (SELECT ActorId
               FROM movies_actors

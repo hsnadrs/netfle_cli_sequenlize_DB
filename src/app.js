@@ -5,6 +5,7 @@ const { createMovie, readMovie, updateActor, updateDirector, Moviedelete } = req
 
 async function app(yargsInput) {
     await sequelize.sync({alter:true});
+    console.log (yargsInput);
     if (yargsInput.create) {
         //place code to create a movie here
         await createMovie({
